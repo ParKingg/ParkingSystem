@@ -26,9 +26,9 @@ MEDIA_DIR = os.path.join(BASE_DIR,'media')
 SECRET_KEY = '#%s((v=xakyao357_9b&*k$x3ca$p-gvf8^ix^5pcbzva58gd5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['ParkingReservation.pythonanywhere.com']
 
 
 # Application definition
