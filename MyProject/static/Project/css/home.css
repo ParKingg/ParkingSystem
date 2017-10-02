@@ -1,0 +1,153 @@
+   body {
+    font-family: 'Bitter';
+    /*color: white;*/
+    color: grey;
+    margin: 0;
+    padding: 0;
+    background-color: #78a8ce;
+  }
+
+
+  a {
+    color: grey !important;
+  }
+
+  .navbar {
+    background-color: black;
+    border-bottom: 3px solid rgba(0,0,0,.05) !important;
+    opacity: 0.8;
+    border: none;
+    color: white !important;
+    border-color: white;
+    z-index: 5;
+    font-family: 'Work Sans';
+  }
+
+  .navbar a {
+    color: white !important;
+  }
+
+  #logo {
+    position: absolute;
+    margin-left: 11px;
+    margin-top: 15px;
+  }
+
+  .navbar-brand > img {
+    display: inline-block;
+    position: fixed;
+    margin-left: -5px;
+  }
+
+  .navbar-nav {
+    margin-bottom: 5px;
+    color: white;
+  } 
+
+  .btn-outline-success {
+    margin-top: 10px;
+    background-color: transparent;
+    border-color: white;
+    color: white;
+    font-family: 'Work Sans';
+  }
+
+  .btn-outline-success:hover {
+    border-color: #BEBCBC;
+    background-color: #BEBCBC;
+    color: white;
+  }
+
+  .navbar-default .navbar-nav > a {
+    color: #BEBCBC !important;
+    margin-left: 60px;
+  }
+
+  .navbar-default .navbar-nav > a, .navbar-default .navbar-nav > li > a:focus, .navbar-default .navbar-nav > li > a:hover {
+    background-color: transparent !important;
+    color: #BEBCBC !important;
+    font-family: 'Work Sans';
+  }
+
+  .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover {
+    background-color: transparent !important;
+    color: #BEBCBC !important;
+    font-family: 'Work Sans';
+  }
+
+  .container-fluid > .navbar-collapse, .container-fluid > .navbar-header, .container > .navbar-collapse, .container > .navbar-header {
+    margin-left: 10px;
+  }
+
+  .navbar-right {
+    margin-right: 10px;
+  }
+
+  .head {
+    width: 50%;
+    height: 50%;
+    position: relative;
+    margin-left: 390px;
+    margin-bottom: 130px;
+    margin-top: 100px;
+  }
+
+  #login > .btn:hover {
+  	opacity: 0.5;
+  }
+
+  #how {
+    text-align: center;
+    margin-bottom: 200px;
+  }
+
+  #loginbtnimg {
+    width: 100px;
+
+  }
+
+  #howtxt {
+    font-size: large;
+  }
+
+  #reserveimg {
+    width: 100px;
+  }
+
+  #parkimg {
+    width: 100px;
+  }
+
+  #howtxts {
+    margin-right: 250px;
+    margin-left: 250px;
+  }
+
+  #contact {
+    text-align: center;
+    margin-left: 250px;
+    margin-right: 250px;
+    margin-bottom: 200px;
+  }
+
+  #locationtxt {
+    margin-left: -20px;
+  }
+
+  .navbar-fixed-bottom {
+    color: white;
+    font-family: 'Work Sans'; 
+    padding-top: 20px; 
+    opacity: 0.8; 
+    background-color: black;
+  }
+
+  .navbar-fixed-bottom a {
+    color: white !important;
+  }
+
+
+
+
+
+

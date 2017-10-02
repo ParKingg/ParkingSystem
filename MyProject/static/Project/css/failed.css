@@ -1,0 +1,223 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+  #logo {
+    position: absolute;
+    margin-left: 11px;
+    margin-top: 15px;
+  }
+  
+  .inactiveLink {
+   pointer-events: none;
+   cursor: default;
+}
+.login-page {
+  width: 360px;
+  padding: 8% 0 0;
+  margin: auto;
+}
+.form {
+  position: relative;
+  z-index: 1;
+  background: #FFFFFF;
+  max-width: 360px;
+  margin: 0 auto 100px;
+  padding: 45px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+.form input {
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+.form button {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background: #4CAF50;
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+}
+.form button:hover,.form button:active,.form button:focus {
+  background: #43A047;
+}
+.form .message {
+  margin: 15px 0 0;
+  color: #b3b3b3;
+  font-size: 12px;
+}
+.form .message a {
+  color: #4CAF50;
+  text-decoration: none;
+}
+.form .register-form {
+  display: none;
+}
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 300px;
+  margin: 0 auto;
+}
+.container:before, .container:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+.container .info {
+  margin: 50px auto;
+  text-align: center;
+}
+.container .info h1 {
+  margin: 0 0 15px;
+  padding: 0;
+  font-size: 36px;
+  font-weight: 300;
+  color: #1a1a1a;
+}
+.container .info span {
+  color: #4d4d4d;
+  font-size: 12px;
+}
+.container .info span a {
+  color: #000000;
+  text-decoration: none;
+}
+.container .info span .fa {
+  color: #EF3B3A;
+}
+body {
+  background: #76b852; /* fallback for old browsers */
+  background: -webkit-linear-gradient(right, #76b852, #8DC26F);
+  background: -moz-linear-gradient(right, #76b852, #8DC26F);
+  background: -o-linear-gradient(right, #76b852, #8DC26F);
+  background: linear-gradient(to left, #76b852, #8DC26F);
+  font-family: 'Work Sans';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;      
+}
+
+  
+  /*
+  .navbar-brand {
+    margin-left: 55px !important;
+    margin-top: ;
+  }
+
+  .navbar {
+    background-color: transparent;
+    border: 100px;
+    color: white;
+  }
+
+  #login > .btn {
+    position: relative;
+    font-family: 'Work Sans';
+    color: white;
+    float: right;
+    margin-right: 350px;
+    background-color: #23C9D8;
+    border: 1.5px solid #e6ba25;
+  }
+  */
+
+  a {
+    color: white;
+  }
+
+  .navbar {
+    background-color: transparent;
+    border-bottom: 3px solid rgba(0,0,0,.05) !important;
+    opacity: 0.7;
+    border: none;
+    color: white;
+    border-color: white;
+    z-index: 5;
+  }
+
+  .navbar-brand > img {
+    display: inline-block;
+    position: fixed;
+    margin-left: -5px;
+  }
+
+  .navbar-nav {
+    margin-bottom: 5px;
+    color: white;
+  } 
+
+  .btn-outline-success {
+    margin-top: 10px;
+    background-color: transparent;
+    border-color: white;
+    color: white;
+    font-family: 'Work Sans';
+  }
+
+  .btn-outline-success:hover {
+    border-color: #BEBCBC;
+    background-color: #BEBCBC;
+    color: white;
+  }
+
+  .navbar-default .navbar-nav > a {
+    color: #BEBCBC !important;
+  }
+
+  .navbar-default .navbar-nav > a, .navbar-default .navbar-nav > li > a:focus, .navbar-default .navbar-nav > li > a:hover {
+    background-color: transparent !important;
+    color: #BEBCBC !important;
+    font-family: 'Work Sans';
+  }
+
+  .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover {
+    background-color: transparent !important;
+    color: #BEBCBC !important;
+    font-family:  'Work Sans';
+    margin-left: 10px;
+  }
+
+  .container-fluid > .navbar-collapse, .container-fluid > .navbar-header, .container > .navbar-collapse, .container > .navbar-header {
+    margin-left: 10px;
+  }
+
+  .navbar-right {
+    margin-right: 10px;
+  }
+
+  .head {
+    width: 50%;
+    height: 50%;
+    position: relative;
+    margin-left: 390px;
+    margin-bottom: 130px;
+  }
+
+  .success {
+    color: white;
+    font-family: 'Work Sans';  
+    margin-top: -250px;
+  }
+
+
+  /**
+  .sticky-footer-navbar {
+    font-family: 'Work Sans';
+    position: absolute;
+    bottom: 0px;
+    height: 70px;
+    width: 100%;
+  }
+  **/
