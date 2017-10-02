@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+<head>
+{% load staticfiles %}
+  <title>ParKing</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet"> 
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="{% static "Project/css/index6.css" %}">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.6.6/jquery.fullPage.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-formhelpers/2.3.0/js/bootstrap-formhelpers.js"></script>
+  <!-- JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.6.6/jquery.fullPage.min.js"></script></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-formhelpers/2.3.0/js/bootstrap-formhelpers.js"></script>
+  <script src="{% static "Project/js/index4.js" %}"/></script>
+</head>
+<script>
+function openNav() {
+    document.getElementById("mySidenav").style.width = "270px";
+}
+
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+}
+
+function openContactNav() {
+    document.getElementById("ContactNav").style.width = "100%";
+}
+
+function closeContactNav() {
+    document.getElementById("ContactNav").style.width = "0";
+}
+
+function showBurger() {
+    document.getElementById("burger").style.display = 'block';
+}
+
+function hideBurger() {
+    document.getElementById("burger").style.display = 'none';
+}
+/*
+function openProfileNav() {
+    document.getElementById("mySidenav").style.width = "100%";
+}
+
+function closeProfileNav() {
+    document.getElementById("mySidenav").style.width = "0";
+}
+
+function showProfile() {
+    document.getElementById("Profile").style.display = 'block';
+}
+
+function hideProfile() {
+    document.getElementById("Profile").style.display = 'none';
+}
+
+function openProfileNav() {
+    document.getElementById("ProfileNav").style.width = "250px";
+    document.getElementById("park").style.marginRight = "250px";
+}
+
+function closeProfileNav() {
+    document.getElementById("ProfileNav").style.width = "0";
+    document.getElementById("park").style.marginRight= "0";
+}
+*/
+
+</script>
+
+<body data-spy="scroll" data-target="#myScrollspy" style="font-family: Work Sans">
+  <div id="fullpage">
+		<div id="park" class="section">
+      <div id="mySidenav" class="sidenav">
+        <div>
+          <a href="javascript:void(0)" class="closebtn" onclick="closeNav(), showBurger()">&times;</a>
+          {% if Information %}
+          {% for info in Information %}
+          {% if info.Profile_Pic %}
+          <img src="{{MEDIA_URL}}{{info.Profile_Pic}}" class="img-circle" style=" width: 60%; height:60%; margin-left: 60px;">
+          {% else %}
+          <img src="{{MEDIA_URL}}{{'display_pictures/stock.png'}}" class="img-circle" style=" width: 40%; height:40%; margin-left: 80px;">
+          {% endif %}
+          {% endfor %}
+          {% endif %}
+          <a href="#" data-toggle="modal" data-target="#myModal">Profile</a>
+          <a href="#" onclick="openContactNav()">Contact Us</a>
+          {% if reserve == 1 %}
+          <a href="/home/updateReservation/">Update Reservation</a>
+           <a href="#" data-toggle="modal" data-target="#myModalCancel">Cancel Reservation</a>
+          {% endif %}
+          <form method="POST">
+          {% csrf_token %}
+          <button type="submit" name="logged_out" style="background-color: red;">Logout</button>
+          </form>
+        </div>
+
+      </div>
+
+    <div id="ProfileNav" class="sidenavprofile">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeProfileNav(), show()">&times;</a>
+      <a href="#">Profile</a>
+      <a  onclick="openContactNav()">Contact Us</a>
+      <a href="#">Logout</a>
+    </div>
+
+
+    <div id="ContactNav" class="fullsidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeContactNav()">&times;</a>
+        <div class="col-xs-4">
+          <img id="emailimg" src="{% static "Project/img/email.png" %}" width="30%">
+        </div>
+        <div class="col-xs-4">
+          <img id="phoneimg" src="{% static "Project/img/phone.png" %}" width="30%">
+        </div>
+        <div class="col-xs-4">
+          <img id="mapimg" src="{% static "Project/img/map.png" %}" width="30%">
+        </div>
+      <div class="row">
+        <div class="col-xs-4">    
+          <p id="emailtxt" style="color: white;">Customer Support<br><a href="#" style="color: white;">parking@gmail.com</a></p>
+        </div>
+        <div class="col-xs-4">
+           <p id="phonetxt" style="color: white;">Parking Space Hotline<br><a href="#" style="color: white; margin-right: 20px;">+639163679346</a></p>
+        </div>
+        <div class="col-xs-4">
+          <p id="locationtxt" style="color: white;">Site Address<br>Technological Institute of the Philippines<br>938 Aurora Blvd, Project 3,<br>Quezon City, Metro Manila,
+           <br>Philippines</p>
+        </div>
+     </div>
+    </div>
+     
+
+    <span id="burger" onclick="openNav(), hideBurger()">&#9776;</span>
+
+		    {% if reserve == 1 %}
+
+       
+      <div id="forms1">
+
+      <p style="text-align: center;"> Successful <span class="glyphicon glyphicon-ok"></span></p>
+      <form>
+      <button type="submit" formaction="/home/checkout" class="btn btn-success btn-block">Proceed to Checkout <span class="glyphicon glyphicon-menu-right"></span></button>
+      </form>
+        
+
+      </div>
+      {% elif reserve == 2 %}
+
+      <div id="forms1">
+      <form>
+      <p style="text-align: center;"> Oops Something Went Wrong &nbsp;<span class="glyphicon glyphicon-remove"></span></p>
+      <button type="submit" class="btn btn-danger btn-block" formaction="/home/process">Return to Previous Transaction <span class="glyphicon glyphicon-menu-left"></span></button>
+    
+      </form>
+      </div>
+
+      {% else %}
+
+      <div id="slottxt">
+      <h2 style="float:right;">Reserve a Slot</h2>
+     </div>
+        <div id="forms1">
+       <form method = "POST">
+
+
+       
+
+        {% csrf_token %}
+        <div class="form-group">
+
+
+        {{username}}
+
+        <label for="sel1">Available Slot:</label>
+          <div>
+        <select class="slot form-control" id="sel1" required name = "slot"/>
+        {% if slotno %}
+        {% for slot in slotno %}
+          <option>{{slot.Slot_no}}</option>
+        {% endfor %}
+        {% endif %}
+       
+
+        </select>
+      </div>
+      <div class="form-group">
+      <label>Type of Vehicle:</label>
+      <select class="slot form-control" id="sel1" required name="tov">
+          
+        <option>AUV</option>
+        <option>Sedan</option>
+        <option>SUV</option>
+        <option>MPV</option>
+        <option>Hatchback</option>
+
+
+      </select>
+        
+
+
+      </div>
+      
+
+        <div class="form-group">
+
+            <input type="text" class="form-control" id="usr" pattern="[A-Z]{3}-[0-9]{4}" placeholder="Plate Number" required name = "plateno" />
+            {% if error == 1 %}
+            <p>Duplicate plate number are not allowed</p>
+            {% endif %}
+          </div>
+      
+      <div>
+      
+        <p id="timeintxt">Time in:</p>
+        <input type="time" style="color: black; margin-left:60px" name="timein" placeholder="00:00:00" size="4px" required name="timein" /> 
+        {% if error == 3 %}
+        <p>Invalid Time</p>
+        {% endif %}
+    
+      </div>
+
+      <div>
+        <br>
+          <p id="datetxt">Date:</p>
+          <input id="input-date" type="date" style="margin-left:48px" required name="datein" />
+          <span class="result"></span>
+          {% if error == 2 %}
+          <p>Invalid Date</p>
+          {% endif %}
+        </div>
+        
+          <br>
+                <button name="reserve" type="submit" class="btn-md btn btn-success">Reserve</button>
+        </div>
+      </div>
+       
+         
+      </form>
+        {% endif %}
+    <div class="parkspace">
+      <div class="container">
+      <div id="r1" class="row">
+
+         <div class="col-sm-1" data-toggle="tab"><div class="content" id="s1"> {% if slot1 == 0 %} <style> #s1{ opacity : 0.2;}</style> 1{% else %} 1 {% endif %}</div></div>
+          <div class="col-sm-1" data-toggle="tab"><div class="content" id="s2">{% if slot2 == 0 %}<style> #s2{ opacity : 0.2;}</style> 2{% else %} 2 {% endif %}</div></div>
+          <div class="col-sm-1" data-toggle="tab"><div class="content" id ="s3">{% if slot3 == 0 %}<style> #s3{ opacity : 0.2;}</style> 3{% else %} 3 {% endif %}</div></div>
+          <div class="col-sm-1" data-toggle="tab"><div class="content" id ="s4">{% if slot4 == 0 %}<style> #s4{ opacity : 0.2;}</style> 4{% else %} 4 {% endif %}</div></div>
+          <div class="col-sm-1" data-toggle="tab"><div class="content" id ="s5">{% if slot5 == 0 %}<style> #s5{ opacity : 0.2;}</style> 5{% else %} 5 {% endif %}</div></div> 
+          <div class="col-sm-1" data-toggle="tab"><div class="content" id ="s6">{% if slot6 == 0 %}<style> #s6{ opacity : 0.2;}</style> 6{% else %} 6 {% endif %}</div></div>
+          <div class="col-sm-1" data-toggle="tab"><div class="content" id ="s7">{% if slot7 == 0 %}<style> #s7{ opacity : 0.2;}</style> 7{% else %} 7 {% endif %}</div></div>
+         
+
+      </div>
+        
+        <div id="r2" class="row">
+          <div class="col-sm-1" data-toggle="tab"><div class="content" id ="s8">{% if slot8 == 0 %}<style> #s8{ opacity : 0.2;}</style> 8{% else %} 8 {% endif %}</div></div>
+          <div class="col-sm-1" data-toggle="tab"><div class="content" id ="s9">{% if slot9 == 0 %}<style> #s9{ opacity : 0.2;}</style> 9{% else %} 9 {% endif %}</div></div>
+          <div class="col-sm-1" data-toggle="tab"><div class="content" id ="s10">{% if slot10 == 0 %}<style> #s10{ opacity : 0.2;}</style> 10{% else %} 10 {% endif %}</div></div>
+          <div class="col-sm-1" data-toggle="tab"><div class="content" id ="s11">{% if slot11 == 0 %}<style> #s11{ opacity : 0.2;}</style> 11{% else %} 11 {% endif %}</div></div>
+          <div class="col-sm-1" data-toggle="tab"><div class="content" id ="s12">{% if slot12 == 0 %}<style> #s12{ opacity : 0.2;}</style> 12{% else %} 12 {% endif %}</div></div> 
+          <div class="col-sm-1" data-toggle="tab"><div class="content" id ="s13">{% if slot13 == 0 %}<style> #s13{ opacity : 0.2;}</style> 13{% else %} 13 {% endif %}</div></div>
+          <div class="col-sm-1" data-toggle="tab"><div class="content" id ="s14">{% if slot14 == 0 %}<style> #s14{ opacity : 0.2;}</style> 14{% else %} 14 {% endif %}</div></div>       
+      </div>
+        <div id="r3" class="row">
+          <div class="col-sm-1" data-toggle="tab"><div class="content" id ="s15">{% if slot15 == 0 %}<style> #s15{ opacity : 0.2;}</style> 15{% else %} 15 {% endif %}</div></div>
+          <div class="col-sm-1" data-toggle="tab"><div class="content" id ="s16">{% if slot16 == 0 %}<style> #s16{ opacity : 0.2;}</style> 16{% else %} 16 {% endif %}</div></div>
+          <div class="col-sm-1" data-toggle="tab"><div class="content" id ="s17">{% if slot17 == 0 %}<style> #s17{ opacity : 0.2;}</style> 17{% else %} 17 {% endif %}</div></div>
+          <div class="col-sm-1" data-toggle="tab"><div class="content" id ="s18">{% if slot18 == 0 %}<style> #s18{ opacity : 0.2;}</style> 18{% else %} 18 {% endif %}</div></div>
+          <div class="col-sm-1" data-toggle="tab"><div class="content" id ="s19">{% if slot19 == 0 %}<style> #s19{ opacity : 0.2;}</style> 19{% else %}19 {% endif %}</div></div>   
+          <div class="col-sm-1" data-toggle="tab"><div class="content" id ="s20">{% if slot20 == 0 %}<style> #s20{ opacity : 0.2;}</style> 20{% else %} 20 {% endif %}</div></div>
+          <div class="col-sm-1" data-toggle="tab"><div class="content" id ="s21">{% if slot21 == 0 %}<style> #s21{ opacity : 0.2;}</style> 21{% else %} 21 {% endif %}</div></div>     
+      </div>
+        <div id="r4" class="row">
+          <div class="col-sm-1" data-toggle="tab"><div class="content" id ="s22">{% if slot22 == 0 %}<style> #s22{ opacity : 0.2;}</style> 22{% else %} 22 {% endif %}</div></div>
+          <div class="col-sm-1" data-toggle="tab"><div class="content" id ="s23">{% if slot23 == 0 %}<style> #s23{ opacity : 0.2;}</style> 23{% else %} 23 {% endif %}</div></div>
+          <div class="col-sm-1" data-toggle="tab"><div class="content" id ="s24">{% if slot24 == 0 %}<style> #s24{ opacity : 0.2;}</style> 24{% else %}24{% endif %}</div></div>
+          <div class="col-sm-1" data-toggle="tab"><div class="content" id ="s25">{% if slot25 == 0 %}<style> #s25{ opacity : 0.2;}</style> 25{% else %} 25 {% endif %}</div></div>
+          <div class="col-sm-1" data-toggle="tab"><div class="content" id ="s26">{% if slot26 == 0 %}<style> #s26{ opacity : 0.2;}</style> 26{% else %} 26 {% endif %}</div></div>  
+          <div class="col-sm-1" data-toggle="tab"><div class="content" id ="s27">{% if slot27 == 0 %}<style> #s27{ opacity : 0.2;}</style> 27{% else %} 27 {% endif %}</div></div>
+          <div class="col-sm-1" data-toggle="tab"><div class="content" id ="s28">{% if slot28 == 0 %}<style> #s28{ opacity : 0.2;}</style> 28{% else %} 28 {% endif %}</div></div>       
+      </div>
+      </div>
+    </div>
+    </div>
+		<div id="map" class="section">
+			<iframe id="wazemap" src="https://embed.waze.com/iframe?zoom=17&lat=14.626224&lon=121.06204&pin=1"
+  			width="857" height="500"></iframe>
+  		  <div id="location">
+  		  	<p id="add">ADDRESS</p>
+  		  	<p>Technological Institute of the Philippines <br> 938 Aurora Blvd, Project 3, <br> Quezon City, Metro Manila, <br> Philippines</p>
+  		  </div>
+		</div>
+	</div>
+</body>
+<!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+    <div class="card">
+           {% if Information %}
+           {% for info in Information %}
+          {% if info.Profile_Pic %}
+          <img src="{{MEDIA_URL}}{{info.Profile_Pic}}" style=" width: 100%; ">
+          {% else %}
+          <img src="{{MEDIA_URL}}{{'display_pictures/stock.png'}}" class="img-circle" style=" width: 40%; height:40%; margin-left: 80px;">
+          {% endif %}
+        
+     
+      <p><h1>{{info.Fname}} {{info.Lname}}</h1></p>
+      <p class="address">{{info.Address}}</p>
+      <p class="contact">{{info.Contactno}}</p>
+      <p>{{info.Email}}</p>
+      <p><form method="POST">{% csrf_token %}<button type="submit" name="editprofile">Edit</button></form></p>
+      {% endfor %}
+        {% endif %}
+    </div>
+  </div>
+  </div>
+  <div class="modal fade" id="myModalCancel" role="dialog">
+    <div  class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          Are you sure you want to cancel your reservation?<br><br>
+         <p><form method="POST">{% csrf_token %}<button type="submit" class="btn-md btn btn-success" name="cancelled">Yes</button></form></p><p><button type="button" id="cancelbtn" class="btn-md btn btn-danger" onclick="Close">No</button></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <div class="modal fade" id="myModalPaypal" role="dialog">
+    <div  class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+         <p><form method="POST"><button type="submit" class="btn-md" name="cancelled">Cancel</button></form></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {% load staticfiles %}
+  <title>ParKing</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet"> 
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="{% static "Project/css/profile.css" %}">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.6.6/jquery.fullPage.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-formhelpers/2.3.0/css/bootstrap-formhelpers.css">
+  <!-- JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.6.6/jquery.fullPage.min.js"></script></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-formhelpers/2.3.0/js/bootstrap-formhelpers.js"></script>
+  <script src="{% static "Project/js/profile.js" %}"/></script>
+</head>
+<body>
+  <div id="header">
+  <nav class="navbar navbar-default navbar-static-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+         <a href="/home/"><span id="backbtn" class="glyphicon glyphicon-arrow-left"></span><p id="btntxt">Return</p></a>
+      </div>
+         </form>
+      </ul>
+    </div>
+  </nav>
+  </div>
+  <div id="fullpage" class="section">
+  <div class="login-page">
+
+<form method="POST" enctype="multipart/form-data">
+
+{% csrf_token %}
+<div id="prof" class="panel panel-default" style="margin-bottom: 1500px">
+  <div class="panel-body">
+  {% if AccInfo %}
+  {% for info in AccInfo %}
+      <a href="#" data-toggle="tooltip" title="Edit Image" data-placement="right">
+      {% if info.Profile_Pic %}<img class="image" src="{{MEDIA_URL}}{{info.Profile_Pic}}" alt="Profile Image" style="width: 50%; border: solid; color: whitesmoke; margin-top: -90px;" id="img">
+      {% else %}<img class="image" src="{{MEDIA_URL}}{{'display_pictures/stock.png'}}" alt="Profile Image" style="width: 50%; border: solid; color: whitesmoke; margin-top: -90px;" id="img">{% endif %}</a>
+      <input type="file" class="uploadimage" name="profile_pic" accept="image/*" style="display: none;">
+      <br>
+      <br>
+  
+  <div class="form-group row">
+  <div class="col-xs-6">
+  <input class="form-control" id="ex1" type="text" placeholder="First Name" name="fname" value="{{info.Fname}}">
+  </div>
+  <div class="col-xs-6">
+  <input class="form-control" id="ex2" type="text" placeholder="Last Name" name="lname" value="{{info.Lname}}">
+  </div>
+  </div>
+
+  <label>Present Password</label>
+  <div class="input-group-3">
+  <input class="form-control" id="ex1" type="password" placeholder="Password" name="oldpass" >
+  {% if error == 1 %}
+  <p>Invalid password</p>
+  {% endif %}
+  </div>
+  <label>New Password</label>
+  <div class="form-group row">
+  <div class="col-xs-6">
+  <input class="form-control" id="ex1" type="password" placeholder="Password" name="newpass">
+  </div>
+  <div class="col-xs-6">
+  <input class="form-control" id="ex2" type="password" placeholder="Confirm Password" name="confirmpass">
+  {% if error == 2 %}
+  <p>Password is not match</p>
+  {% endif %}
+  </div>
+  </div>
+  <br>
+    <div class="input-group-3">
+  <input type="email" class="form-control" placeholder="Email" name="email" value="{{info.Email}}">
+  </div>
+  <br>
+    <div class="input-group-3">
+  <input type="text" class="form-control" placeholder="Address" name="address" value="{{info.Address}}">
+  </div>
+  <br>
+    <div class="input-group-3" >
+  <input type="text" class="form-control bfh-phone" data-format="+63 ddd ddd dddd" data-trigger="hover" data-toggle="popover" data-content="Contact Number" required name="contactno" value="{{info.Contactno}}" />
+  </div>
+  <br>
+  
+  <button type="submit" class="btn btn-success btn-block" name="updateprofile">Update Profile</button>
+
+</form>
+{% endfor %}
+  {% endif %}
+</div>
+</div>
+  </div>
+</div>
+</body>
+<footer class="footer navbar-fixed-bottom" style="color: white; font-family: 'Work Sans';">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="col-md-8">
+          <a href="#" onclick="window.open('/termsofservice/', 'newwindow', 'width=300, height=250'); return false;">Terms of Service</a> | <a href="#" onclick="window.open('/privacy/', 'newwindow', 'width=300, height=250'); return false;">Privacy</a>    
+        </div>
+        <div class="col-md-4">
+          <p class="muted pull-right">Copyright 2017 ParKing</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+</html>
