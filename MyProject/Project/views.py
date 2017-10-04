@@ -28,7 +28,8 @@ def payment_done(request):
 			ChoicedSlot = ReserveParking.objects.get(User_id_id = AccLogged.User_id)
 			ParkingLot.objects.filter(Slot_no = ChoicedSlot.Slot_no).update(Availability = 0)
 			ReserveParking.objects.filter(Plate_no = ChoicedSlot.Plate_no).update(Paid = 1)
-			SuccPayment = ReservationFee(User_id_id = AccLogged.User_id, Customer_Fname = AccLogged.Fname, Customer_Lname = AccLogged.Lname, Item_Cost = 50, Item_Name = "Reservation_Fee", Status = "Success")
+			SuccPayment = ReservationFee(User_id_id = AccLogged.User_id, Customer_Fname = AccLogged.Fname, Customer_Lname = AccLogged.Lname, Item_Cost = 50, Item_Name = "Reservation_Fee", Status = "Success",
+				Time_in = ChoicedSlot.Time_in, Plate_no = ChoicedSlot.Plate_no, Slot_no = ChoicedSlot.Slot_no, Date_in = ChoicedSlot.Date_in)
 			SuccPayment.save()
 
 			request.session['Paid'] = True
@@ -48,7 +49,8 @@ def payment_cancelled(request):
 		if request.method == 'POST' and 'failed' in request.POST:
 
 			AccLogged = Account.objects.get(Username = request.session['username'])
-			FailPayment = ReservationFee(User_id_id = AccLogged.User_id, Customer_Fname = AccLogged.Fname, Customer_Lname = AccLogged.Lname, Item_Cost = 25, Item_Name = "Reservation_Fee", Status = "Cancelled")
+			ChoicedSlot = ReserveParking.objects.get(User_id_id = AccLogged.User_id)
+			FailPayment = ReservationFee(User_id_id = AccLogged.User_id, Customer_Fname = AccLogged.Fname, Customer_Lname = AccLogged.Lname, Item_Cost = 50, Item_Name = "Reservation_Fee", Status = "Cancelled",Time_in = ChoicedSlot.Time_in, Plate_no = ChoicedSlot.Plate_no, Slot_no = ChoicedSlot.Slot_no, Date_in = ChoicedSlot.Date_in)
 			FailPayment.save()
 			ReserveParking.objects.filter(Plate_no = ChoicedSlot.Plate_no).delete()
 			request.session['Paid'] = False
@@ -181,6 +183,8 @@ def index(request):
 	if 'logged_in' in request.session:
 
 		a = Account.objects.get(Username = request.session['username'])
+		
+		
 				
 		print("Redirecting to index page")
 
@@ -189,6 +193,7 @@ def index(request):
 
 
 		availableslots = ParkingLot.objects.filter(Availability = 1)
+
 
 
 		s1 = ParkingLot.objects.get(Slot_no = 1)
@@ -219,7 +224,7 @@ def index(request):
 		s26 = ParkingLot.objects.get(Slot_no = 26)
 		s27 = ParkingLot.objects.get(Slot_no = 27)
 		s28 = ParkingLot.objects.get(Slot_no = 28)
-		isAlreadyReserve = ReserveParking.objects.filter(User_id_id = a.User_id, Paid = 1).exists()
+		isAlreadyReserve = ReserveParking.objects.filter(User_id_id = a.User_id, Paid = 1, Status = 'Reserved').exists()
 		isAlreadyReserveNotPaid = ReserveParking.objects.filter(User_id_id = a.User_id, Paid = 0).exists()
 		
 
@@ -261,8 +266,6 @@ def index(request):
 		elif isAlreadyReserveNotPaid == True:
 
 
-
-			request.session['reserve_slot'] = True
 			context = {'reserve' : 2, 'username' : a.Username, 'slotno' : availableslots, 'Information' : Information,
 			'slot1' : s1.Availability,
 			'slot2' : s2.Availability,
@@ -295,10 +298,9 @@ def index(request):
 
 
 
-
 		else:
 
-			context = {'reserve' : '0', 'username' : a.Username, 'slotno' : availableslots, 'Information' : Information,
+			context = {'reserve' : 0, 'username' : a.Username, 'slotno' : availableslots, 'Information' : Information,
 			'slot1' : s1.Availability, 
 			'slot2' : s2.Availability,
 			'slot3' : s3.Availability,
@@ -337,6 +339,8 @@ def index(request):
 		
 		if(request.method == 'POST' and 'reserve' in request.POST):
 
+
+			ReserveParking.objects.filter(User_id = a.User_id).delete()
 			time = request.POST['timein']
 			date = request.POST['datein']
 			plateno = request.POST['plateno']
@@ -344,11 +348,14 @@ def index(request):
 			slotnumber = request.POST['slot']
 
 			
-			ac = ReserveParking(User_id_id = a.User_id, Slot_no = slotnumber, Date_in = date, Time_in = time, Plate_no = plateno, Type_of_Vehicle = tov, Paid = False)
+			ac = ReserveParking(User_id_id = a.User_id, Slot_no = slotnumber, Date_in = date, Time_in = time, Plate_no = plateno, Type_of_Vehicle = tov, Paid = False, Status = 'Reserved')
 
 			
 			isExist = ReserveParking.objects.filter(Plate_no=plateno).exists() #throws a boolean either true or false
-		
+
+
+
+			
 
 			
 
@@ -364,7 +371,10 @@ def index(request):
 						request.session['reserve_slot'] = True
 						request.session['Paid'] = False
 						return redirect('payment_process')
-						
+
+
+					
+										
 
 					else:
 
@@ -469,6 +479,15 @@ def index(request):
 				return render(request, 'Project/index3.html', context)
 				request.session['reserve_slot'] = False
 				print("Duplicate plate number is not allowed")
+
+		if(request.method == 'POST' and 'cancelled' in request.POST):
+
+				ChoicedSlot = ReserveParking.objects.get(User_id = a.User_id)
+				print("You have cancelled your reservation")
+				print(a.User_id)
+				ParkingLot.objects.filter(Slot_no = ChoicedSlot.Slot_no).update(Availability = 1)
+				ReserveParking.objects.filter(User_id_id = a.User_id).update(Status = 'Cancelled')
+				return redirect('index')
 				
 
 		if(request.method == 'POST' and 'logged_out' in request.POST):
@@ -482,6 +501,9 @@ def index(request):
 
 			return redirect('editprofile')
 
+
+
+	
 
 	else:
 
@@ -497,8 +519,9 @@ def checkout(request):
 
 	AccLogged = Account.objects.get(Username = request.session['username'])
 	print(AccLogged.User_id)
-	ChoicedSlot = ReserveParking.objects.get(User_id_id = AccLogged.User_id)
-	SuccReserveFee = ReservationFee.objects.get(User_id_id = AccLogged.User_id, Receipt_id = 4)
+	ChoicedSlot = ReserveParking.objects.get(User_id_id = AccLogged.User_id, Status = 'Reserved')
+	print(ChoicedSlot)
+	
 
 	if 'logged_in' in request.session and ChoicedSlot.Paid == 1:
 
@@ -526,8 +549,8 @@ def checkout(request):
 				print("Ticket has been saved")
 
 				TicketInfo = CheckoutTicket.objects.get(User_id_id = AccLogged.User_id, Plateno = ChoicedSlot.Plate_no, Slotno = ChoicedSlot.Slot_no, Date_in = ChoicedSlot.Date_in, Time_in = ChoicedSlot.Time_in)
-				print(AccLogged.User_id, SuccReserveFee.Receipt_id, ChoicedSlot.id,  ChoicedSlot.Time_in,  ChoicedSlot.Date_in, TicketInfo.DateTime_out, TicketInfo.Amount_to_be_paid, ChoicedSlot.Slot_no)
-				Transact = TransactionHistory(Fname = AccLogged.Fname, Lname = AccLogged.Lname, User_id_id = AccLogged.User_id, Receipt_id_id = SuccReserveFee.Receipt_id, Time_in = TicketInfo.Time_in, Date_in = TicketInfo.Date_in, DateTime_out = TicketInfo.DateTime_out, Total_Cost = TicketInfo.Amount_to_be_paid, Slot_no = TicketInfo.Slotno, Plate_no = TicketInfo.Plateno)
+				
+				Transact = TransactionHistory(Fname = AccLogged.Fname, Lname = AccLogged.Lname, User_id_id = AccLogged.User_id, Time_in = TicketInfo.Time_in, Date_in = TicketInfo.Date_in, DateTime_out = TicketInfo.DateTime_out, Total_Cost = TicketInfo.Amount_to_be_paid, Slot_no = TicketInfo.Slotno, Plate_no = TicketInfo.Plateno)
 				print(Transact)
 				Transact.save() 
 
@@ -561,22 +584,16 @@ def update(request):
 			date = request.POST['datein']
 			plateno = request.POST['plateno']
 			tov = request.POST['tov']
-			slotnumber = request.POST['slot']
-
-			
-
-
 
 			if datetime.datetime.strptime(date, "%Y-%m-%d").date() >= datenow:
 
 				if (datetime.datetime.strptime(time, "%H:%M").time() < timenow and datetime.datetime.strptime(date, "%Y-%m-%d").date() > datenow) or (datetime.datetime.strptime(time, "%H:%M").time() > timenow):
 
+					ReserveParking.objects.filter(User_id_id = AccLogged.User_id).update(User_id_id = AccLogged.User_id, Date_in = date, Time_in = time, Plate_no = plateno, Type_of_Vehicle = tov, Status = 'Reserved')
+					ReservationFee.objects.filter(User_id_id = AccLogged.User_id).update(Plate_no = plateno, Time_in = time, Date_in = date)
 
-					PrevSlot_no = ReserveParking.objects.get(User_id_id = AccLogged.User_id)
-					ParkingLot.objects.filter(Slot_no = PrevSlot_no.Slot_no).update(Availability = 1)
-					ReserveParking.objects.filter(User_id_id = AccLogged.User_id).update(User_id_id = AccLogged.User_id, Slot_no = slotnumber, Date_in = date, Time_in = time, Plate_no = plateno, Type_of_Vehicle = tov)
-					ParkingLot.objects.filter(Slot_no = slotnumber).update(Availability = 0)
-					return redirect('checkout')
+
+					return redirect('index')
 
 
 				else:

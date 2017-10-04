@@ -51,6 +51,7 @@ class ReserveParking(models.Model):
 	DateTimeReservation = models.DateTimeField(default = datetime.datetime.now())
 
 	Paid = models.BooleanField(default = False)
+	Status = models.CharField(max_length = 255)
 
 
 
@@ -86,6 +87,10 @@ class ReservationFee(models.Model):
 	Item_Name = models.CharField(max_length = 255)
 	Status = models.CharField(max_length = 255)
 	DateTime_paid = models.DateTimeField(default = datetime.datetime.now())
+	Slot_no = models.IntegerField()
+	Plate_no = models.CharField(max_length=8)
+	Time_in = models.CharField(max_length=255)
+	Date_in = models.CharField(max_length=255)
 
 
 	def __str__(self):
@@ -97,7 +102,7 @@ class TransactionHistory(models.Model):
 
 	Transact_id = models.AutoField(primary_key = True)
 	User_id = models.ForeignKey('Account')
-	Receipt_id = models.ForeignKey('ReservationFee')
+	# Receipt_id = models.ForeignKey('ReservationFee')
 	Time_in = models.TimeField()
 	Date_in = models.DateField()
 	DateTime_out = models.DateTimeField()
