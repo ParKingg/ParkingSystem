@@ -84,7 +84,7 @@ WSGI_APPLICATION = 'MyProject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ParkingReservati$default',
+        'NAME': 'ParkingReservati$Project',
         'USER': 'ParkingReservati',
         'PASSWORD': 'reserve123',    
         'HOST': 'ParkingReservation.mysql.pythonanywhere-services.com'
